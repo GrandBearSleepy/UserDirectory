@@ -17,11 +17,11 @@ export default class UserContainer extends Component {
         this.setState({
           users: res.data.results.map(user => {
             return {
-              picture: user.picture.medium,
+              picture: user.picture.thumbnail,
               firstname: user.name.first,
               lastname: user.name.last,
               email: user.email,
-              dob: user.dob.age
+              dob: user.dob.date.slice(0, 9)
             }
           })
         })
@@ -30,33 +30,44 @@ export default class UserContainer extends Component {
   };
 
 
-  handleSearchUser() {
-    const search = this.state.search.toLowerCase();
-    return this.state.users.filter(user => {
-      return (
-        user.first.toLowerCase().includes(search) ||
-        user.last.toLowerCase().includes(search)
-      );
-    });
-  }
-
   handleInputChange = event => {
-    this.setState({ search: event.target.value })
+
+    const name = event.target.name;
+    const value = event.target.value;
+    // this.setState({
+    //   [name]: value
+    // });
+    this.setState({
+      search: event.target.value
+    });
+    console.log(this.state.search)
+    this.filterInputChange();
   };
 
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
-  //   this.searchUser(this.state.search);
-  // };
-
-
+  filterInputChange() {
+    const searchInput = this.state.search.toLowerCase();
+    this.setState({
+      users: this.state.users.filter(user => {
+        return (
+          user.firstname.toLowerCase().includes(searchInput) ||
+          user.lastname.toLowerCase().includes(searchInput)
+        )
+      })
+    })
+  }
 
   render() {
     return (
-      <div>
-        <SearchForm handleInputChange={this.handleInputChange} />
-        <UserDisplay users={this.state.users} />
+      <div className="container">
+        <div className="row">
+          <SearchForm
+            search={this.state.search}
+            handleInputChange={this.handleInputChange}
+          />
+          <UserDisplay users={this.state.users} />
+        </div>
       </div>
+
     )
   }
 }

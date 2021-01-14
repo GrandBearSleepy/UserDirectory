@@ -3,13 +3,13 @@ import React from 'react';
 export default function UserDisplay(props) {
   console.log(props.users)
   return (
-    <table>
-      <thead>
+    <table className="table table-striped">
+      <thead className="thead-dark">
         <tr>
-          <th>Picture</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Date Of Birth</th>
+          <th scope="col">Picture</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Date Of Birth</th>
         </tr>
       </thead>
       <tbody>
