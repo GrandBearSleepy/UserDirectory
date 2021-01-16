@@ -7,10 +7,19 @@ export default function UserDisplay(props) {
       <thead className="thead-dark">
         <tr>
           <th scope="col">Picture</th>
-          <th scope="col" ><button onClick={props.handleSortByFirstName}>First Name</button></th>
-          <th scope="col" ><button onClick={props.handleSortByLastName}>Last Name</button></th>
+          <th scope="col" ><button
+            onClick={props.handleSortByFirstName}
+            className="btn btn-info"
+          >First Name</button></th>
+          <th scope="col" ><button
+            className="btn btn-info"
+            onClick={props.handleSortByLastName}
+          >Last Name</button></th>
           <th scope="col" >Email</th>
-          <th scope="col" ><button onClick={props.handleSortByDob}>Date Of Birth</button></th>
+          <th scope="col" ><button
+            onClick={props.handleSortByDob}
+            className="btn btn-info"
+          >Date Of Birth</button></th>
         </tr>
       </thead>
       <tbody>
