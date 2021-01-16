@@ -7,13 +7,15 @@ export default class UserContainer extends Component {
   //set up state
   state = {
     users: [],
-    search: ''
+    search: '',
+    searchedUsers: [],
+    sortOrder: false
   }
 
   componentDidMount() {
     API.getUsers()
       .then(res => {
-        console.log(res.data.results);
+        // console.log(res.data.results);
         this.setState({
           users: res.data.results.map(user => {
             return {
@@ -21,7 +23,16 @@ export default class UserContainer extends Component {
               firstname: user.name.first,
               lastname: user.name.last,
               email: user.email,
-              dob: user.dob.date.slice(0, 9)
+              dob: new Date(user.dob.date).toDateString()
+            }
+          }),
+          searchedUsers: res.data.results.map(user => {
+            return {
+              picture: user.picture.thumbnail,
+              firstname: user.name.first,
+              lastname: user.name.last,
+              email: user.email,
+              dob: new Date(user.dob.date).toDateString()
             }
           })
         })
@@ -31,23 +42,19 @@ export default class UserContainer extends Component {
 
 
   handleInputChange = event => {
-
-    const name = event.target.name;
-    const value = event.target.value;
-    // this.setState({
-    //   [name]: value
-    // });
+    console.log(event.target.value)
+    const newValue = event.target.value;
     this.setState({
-      search: event.target.value
+      search: newValue
     });
-    console.log(this.state.search)
-    this.filterInputChange();
+
+    this.filterInputChange(newValue);
   };
 
-  filterInputChange() {
-    const searchInput = this.state.search.toLowerCase();
+  filterInputChange = (searchInput) => {
+    // const searchInput = this.state.search.toLowerCase();
     this.setState({
-      users: this.state.users.filter(user => {
+      searchedUsers: this.state.users.filter(user => {
         return (
           user.firstname.toLowerCase().includes(searchInput) ||
           user.lastname.toLowerCase().includes(searchInput)
@@ -56,15 +63,71 @@ export default class UserContainer extends Component {
     })
   }
 
+  // handleSort = (feild) => {
+  //   // sort array ascending or descending by first name
+  //   if (!this.state.sortOrder) {
+  //     this.setState({
+  //       searchedUsers: this.state.searchedUsers.sort((a, b) => (a.feild > b.feild) ? 1 : -1),
+  //       sortOrder: true
+  //     });
+
+  //   } else {
+  //     this.setState({
+  //       searchedUsers: this.state.searchedUsers.sort((a, b) => (a.feild > b.feild) ? -1 : 1),
+  //       sortOrder: false
+  //     });
+  //   }
+  // }
+
+  handleSortByFirstName = () => {
+    // sort array ascending or descending by first name
+    if (!this.state.sortOrder) {
+      this.setState({
+        searchedUsers: this.state.searchedUsers.sort((a, b) => (a.firstname > b.firstname) ? 1 : -1),
+        sortOrder: true
+      });
+
+    } else {
+      this.setState({
+        searchedUsers: this.state.searchedUsers.sort((a, b) => (a.firstname > b.firstname) ? -1 : 1),
+        sortOrder: false
+      });
+    }
+  }
+
+  handleSortByLastName = () => {
+    if (!this.state.sortOrder) {
+      this.setState({
+        searchedUsers: this.state.searchedUsers.sort((a, b) => (a.lastname > b.lastname) ? 1 : -1),
+        sortOrder: true
+      });
+
+    } else {
+      this.setState({
+        searchedUsers: this.state.searchedUsers.sort((a, b) => (a.lastname > b.lastname) ? -1 : 1),
+        sortOrder: false
+      });
+
+    }
+  }
+
+
+
   render() {
+    console.log(this.state.search);
     return (
       <div className="container">
         <div className="row">
           <SearchForm
-            search={this.state.search}
+            // search={this.state.search}
             handleInputChange={this.handleInputChange}
           />
-          <UserDisplay users={this.state.users} />
+          <UserDisplay
+            users={this.state.searchedUsers}
+            handleSortByFirstName={this.handleSortByFirstName}
+            handleSortByLastName={this.handleSortByLastName}
+            handleSort={this.handleSort}
+          />
         </div>
       </div>
 
