@@ -40,7 +40,6 @@ export default class UserContainer extends Component {
       .catch(err => console.log(err));
   };
 
-
   handleInputChange = event => {
     console.log(event.target.value)
     const newValue = event.target.value;
@@ -62,22 +61,6 @@ export default class UserContainer extends Component {
       })
     })
   }
-
-  // handleSort = (feild) => {
-  //   // sort array ascending or descending by first name
-  //   if (!this.state.sortOrder) {
-  //     this.setState({
-  //       searchedUsers: this.state.searchedUsers.sort((a, b) => (a.feild > b.feild) ? 1 : -1),
-  //       sortOrder: true
-  //     });
-
-  //   } else {
-  //     this.setState({
-  //       searchedUsers: this.state.searchedUsers.sort((a, b) => (a.feild > b.feild) ? -1 : 1),
-  //       sortOrder: false
-  //     });
-  //   }
-  // }
 
   handleSortByFirstName = () => {
     // sort array ascending or descending by first name
@@ -111,7 +94,21 @@ export default class UserContainer extends Component {
     }
   }
 
+  handleSortByDob = () => {
+    if (!this.state.sortOrder) {
+      this.setState({
+        searchedUsers: this.state.searchedUsers.sort((a, b) => (a.dob > b.lastname) ? 1 : -1),
+        sortOrder: true
+      });
 
+    } else {
+      this.setState({
+        searchedUsers: this.state.searchedUsers.sort((a, b) => (a.dob > b.lastname) ? -1 : 1),
+        sortOrder: false
+      });
+
+    }
+  }
 
   render() {
     console.log(this.state.search);
@@ -119,13 +116,13 @@ export default class UserContainer extends Component {
       <div className="container">
         <div className="row">
           <SearchForm
-            // search={this.state.search}
             handleInputChange={this.handleInputChange}
           />
           <UserDisplay
             users={this.state.searchedUsers}
             handleSortByFirstName={this.handleSortByFirstName}
             handleSortByLastName={this.handleSortByLastName}
+            handleSortByDob={this.handleSortByDob}
             handleSort={this.handleSort}
           />
         </div>

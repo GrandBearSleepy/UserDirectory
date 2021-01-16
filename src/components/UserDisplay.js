@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 export default function UserDisplay(props) {
   // console.log(props.users)
   return (
@@ -8,17 +7,17 @@ export default function UserDisplay(props) {
       <thead className="thead-dark">
         <tr>
           <th scope="col">Picture</th>
-          <th scope="col" onClick={props.handleSortByFirstName}>First Name</th>
-          <th scope="col" onClick={props.handleSortByLastName}>Last Name</th>
+          <th scope="col" ><button onClick={props.handleSortByFirstName}>First Name</button></th>
+          <th scope="col" ><button onClick={props.handleSortByLastName}>Last Name</button></th>
           <th scope="col" >Email</th>
-          <th scope="col">Date Of Birth</th>
+          <th scope="col" ><button onClick={props.handleSortByDob}>Date Of Birth</button></th>
         </tr>
       </thead>
       <tbody>
         {
           props.users.map((user, index) => (
             <tr key={index}>
-              <th> <img src={user.picture} alt={user.firstname }></img></th>
+              <th> <img src={user.picture} alt={user.firstname}></img></th>
               <th>{user.firstname}</th>
               <th>{user.lastname}</th>
               <th>{user.email}</th>
