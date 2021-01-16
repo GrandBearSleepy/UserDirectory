@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import API from '../utils/API';
-import UserDisplay from './UserDisplay';
-import SearchForm from './SearchForm';
+import API from '../../utils/API';
+import UserDisplay from '../UserDisplay/UserDisplay';
+import SearchForm from '../SearchForm/SearchForm';
 
 export default class UserContainer extends Component {
   //set up state

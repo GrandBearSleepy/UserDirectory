@@ -1,5 +1,5 @@
-import Header from './components/Header';
-import UserContainer from './components/UserContainer'
+import Header from './components/Header/Header';
+import UserContainer from './components/UserContainer/UserContainer'
 
 
 function App() {
